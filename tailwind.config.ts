@@ -1,77 +1,59 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
-		extend: {
-			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
-				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				silver: {
-					light: '#F1F0FB',
-					DEFAULT: '#C0C0C0',
-					dark: '#8E9196',
-				},
-				gold: {
-					DEFAULT: '#D4AF37',
-					light: '#F8EBC6',
-				},
-				charcoal: {
-					DEFAULT: '#333333',
-					light: '#555555',
-				},
-				jewel: {
-					purple: '#E5DEFF',
-					blue: '#D3E4FD',
-					pink: '#FFDEE2',
-					peach: '#FDE1D3',
-				},
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
+    extend: {
+      colors: {
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))'
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))'
+        },
+        
+        // Update primary brand colors
+        primary: {
+          DEFAULT: '#367D8A',
+          light: '#3A8999',
+          dark: '#285F6B',
+          darker: '#133336',
+        },
+        accent: {
+          DEFAULT: '#FFFFFF',
+          muted: '#F1F1F1',
+        },
+        background: {
+          DEFAULT: '#FFFFFF',
+          dark: '#010001',
+        },
+        // Remove gold colors and update silver
+        silver: {
+          light: '#F1F1F1',
+          DEFAULT: '#E5E5E5',
+          dark: '#CCCCCC',
+        },
 			},
 			fontFamily: {
 				playfair: ['Playfair Display', 'serif'],

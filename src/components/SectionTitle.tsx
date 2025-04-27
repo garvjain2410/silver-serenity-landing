@@ -25,15 +25,15 @@ const SectionTitle = ({ title, subtitle, centered = false, className }: SectionT
       
       {centered && (
         <div className="flex items-center justify-center my-4">
-          <div className="w-16 h-0.5 bg-gold"></div>
-          <div className="w-2 h-2 rounded-full mx-2 bg-gold"></div>
-          <div className="w-16 h-0.5 bg-gold"></div>
+          <div className="w-16 h-0.5 bg-primary"></div>
+          <div className="w-2 h-2 rounded-full mx-2 bg-primary"></div>
+          <div className="w-16 h-0.5 bg-primary"></div>
         </div>
       )}
       
       {subtitle && (
         <p className={cn(
-          "text-muted-foreground text-lg",
+          "text-primary-dark text-lg",
           centered ? "max-w-2xl mx-auto" : "md:max-w-3xl"
         )}>
           {subtitle}

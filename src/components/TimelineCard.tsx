@@ -22,32 +22,32 @@ const TimelineCard = ({
 }: TimelineCardProps) => {
   return (
     <div className={cn("relative", className)} onClick={onClick}>
-      <div className="absolute left-0 h-full w-px bg-silver/20" />
+      <div className="absolute left-0 h-full w-px bg-primary/20" />
       <div
         className={cn(
           "absolute -left-3 top-6 rounded-full p-2 transition-all duration-300",
-          isActive ? "bg-gold" : "bg-silver/40"
+          isActive ? "bg-primary" : "bg-primary/40"
         )}
       >
-        <Milestone className={cn("h-5 w-5", isActive ? "text-charcoal" : "text-white")} />
+        <Milestone className={cn("h-5 w-5", isActive ? "text-white" : "text-white/80")} />
       </div>
       <Card className={cn(
         "ml-10 transition-all duration-300 border-0 shadow-lg",
         isActive 
-          ? "bg-gradient-to-r from-gold/20 to-silver/10 border-l-4 border-l-gold" 
-          : "bg-charcoal-light/20 hover:bg-charcoal-light/30"
+          ? "bg-gradient-to-r from-primary/20 to-primary-dark/10 border-l-4 border-l-primary" 
+          : "bg-background-dark/5 hover:bg-background-dark/10"
       )}>
         <CardHeader className="pb-2">
-          <h3 className="font-playfair text-2xl font-bold text-white">{title}</h3>
-          <p className="text-sm text-silver">{year}</p>
+          <h3 className="font-playfair text-2xl font-bold text-primary-darker">{title}</h3>
+          <p className="text-sm text-primary">{year}</p>
         </CardHeader>
         <CardContent>
-          <p className={cn("text-silver-light", isActive ? "font-medium" : "")}>{description}</p>
+          <p className={cn("text-primary-dark", isActive ? "font-medium" : "")}>{description}</p>
           
           {isActive && (
-            <div className="mt-4 pt-4 border-t border-silver/10">
-              <div className="flex items-center gap-3 text-sm text-silver-light">
-                <div className="w-2 h-2 rounded-full bg-gold"></div>
+            <div className="mt-4 pt-4 border-t border-primary/10">
+              <div className="flex items-center gap-3 text-sm text-primary-dark">
+                <div className="w-2 h-2 rounded-full bg-primary"></div>
                 <span>Traditional craftsmanship meets modern design</span>
               </div>
             </div>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -46,7 +45,7 @@ const Header = () => {
       <div className="container mx-auto px-4 flex items-center justify-between">
         <a href="#" className="flex items-center">
           <span className="font-playfair text-2xl font-bold tracking-tight">
-            Silver<span className="text-silver-dark">Elite</span>
+            Om<span className="text-primary">silver</span>
           </span>
         </a>
 
@@ -56,14 +55,11 @@ const Header = () => {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium hover:text-silver-dark transition-colors"
+              className="text-sm font-medium hover:text-primary transition-colors"
             >
               {item.label}
             </a>
           ))}
-          <Button variant="outline" className="border-silver hover:bg-silver/10">
-            Wholesale Login
-          </Button>
         </nav>
 
         {/* Mobile Navigation Toggle */}
@@ -73,9 +69,9 @@ const Header = () => {
           aria-label="Toggle menu"
         >
           {isMenuOpen ? (
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6 text-primary" />
           ) : (
-            <Menu className="h-6 w-6" />
+            <Menu className="h-6 w-6 text-primary" />
           )}
         </button>
 
@@ -87,15 +83,12 @@ const Header = () => {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-sm font-medium hover:text-silver-dark transition-colors"
+                  className="text-sm font-medium hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
                 </a>
               ))}
-              <Button variant="outline" className="border-silver hover:bg-silver/10">
-                Wholesale Login
-              </Button>
             </nav>
           </div>
         )}
