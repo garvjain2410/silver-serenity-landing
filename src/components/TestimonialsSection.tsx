@@ -8,26 +8,26 @@ import { Card, CardContent } from "@/components/ui/card";
 const TESTIMONIALS = [
   {
     id: 1,
-    name: "Emma Johnson",
-    company: "Elegance Boutique",
+    name: "Priya Sharma",
+    company: "Elegance Boutique, Delhi",
     image: "https://randomuser.me/api/portraits/women/12.jpg",
-    content: "SilverElite has transformed our jewelry selection. Their wholesale pieces offer exceptional quality that our customers immediately recognize and appreciate. The compliments we receive daily speak volumes about the craftsmanship.",
+    content: "Omsilver's jewelry collection has transformed our boutique offerings. Their craftsmanship is unparalleled and our customers immediately recognize the quality. The traditional designs with modern touches are exactly what our market demands.",
     rating: 5,
   },
   {
     id: 2,
-    name: "Michael Chen",
-    company: "Azure Accessories",
+    name: "Vikram Mehta",
+    company: "Silver Haven, Mumbai",
     image: "https://randomuser.me/api/portraits/men/51.jpg",
-    content: "Working with SilverElite has been a game-changer for our business. The designs are unique, the quality is outstanding, and their customer service is beyond compare. Our silver collection has become our bestseller.",
+    content: "Working with Omsilver has been a game-changer for our business. The designs connect with our clientele's appreciation for heritage craftsmanship. Their silver work maintains its luster beautifully, which keeps our customers coming back.",
     rating: 5,
   },
   {
     id: 3,
-    name: "Sophia Martinez",
-    company: "Luxe & Co.",
+    name: "Anita Desai",
+    company: "Royal Jewels, Jaipur",
     image: "https://randomuser.me/api/portraits/women/23.jpg",
-    content: "I've been sourcing wholesale jewelry for over a decade, and SilverElite stands out for their attention to detail and reliability. The pieces maintain their luster beautifully, which keeps our customers coming back for more.",
+    content: "I've been sourcing silver jewelry for over a decade, and Omsilver stands out for their consistency and attention to detail. Their pieces tell a story of tradition while appealing to contemporary tastes - a remarkable balance.",
     rating: 5,
   },
 ];
@@ -60,41 +60,48 @@ const TestimonialsSection = () => {
   }, []);
 
   return (
-    <section id="testimonials" className="py-20 bg-silver-light" ref={sectionRef}>
+    <section id="testimonials" className="py-24 bg-silver-light relative" ref={sectionRef}>
+      {/* Decorative patterns */}
+      <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-silver/20 rounded-bl-full"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gold/5 rounded-tr-full"></div>
+
       <Container>
         <SectionTitle
           title="Client Testimonials"
-          subtitle="Hear from our valued wholesale partners about their experience with SilverElite"
+          subtitle="Hear from our valued partners about their experience with Omsilver's craftsmanship"
           centered
         />
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8 relative z-10">
           {TESTIMONIALS.map((testimonial, index) => (
             <div
               key={testimonial.id}
               className="slide-in"
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <Card className="h-full hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 h-full flex flex-col">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-4">
+              <Card className="h-full hover:shadow-lg transition-shadow border-0 shadow overflow-hidden">
+                <CardContent className="p-0 h-full">
+                  <div className="bg-gold/10 p-6">
+                    <div className="flex items-center gap-4">
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-white shadow-sm"
                       />
                       <div>
-                        <h4 className="font-medium">{testimonial.name}</h4>
+                        <h4 className="font-medium font-playfair text-lg">{testimonial.name}</h4>
                         <p className="text-sm text-muted-foreground">{testimonial.company}</p>
                       </div>
                     </div>
+                  </div>
+                  
+                  <div className="p-6">
                     <div className="flex mb-4">
                       {[...Array(5)].map((_, i) => (
                         <svg
                           key={i}
                           className={`w-5 h-5 ${
-                            i < testimonial.rating ? "text-yellow-400" : "text-gray-300"
+                            i < testimonial.rating ? "text-gold" : "text-silver/30"
                           }`}
                           fill="currentColor"
                           viewBox="0 0 20 20"
@@ -103,8 +110,10 @@ const TestimonialsSection = () => {
                         </svg>
                       ))}
                     </div>
-                    <blockquote className="italic text-muted-foreground">
-                      "{testimonial.content}"
+                    <blockquote className="text-muted-foreground">
+                      <span className="text-3xl text-gold font-serif leading-none">"</span>
+                      <span className="italic">{testimonial.content}</span>
+                      <span className="text-3xl text-gold font-serif leading-none">"</span>
                     </blockquote>
                   </div>
                 </CardContent>

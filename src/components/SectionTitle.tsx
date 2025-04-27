@@ -16,11 +16,26 @@ const SectionTitle = ({ title, subtitle, centered = false, className }: SectionT
       centered && "text-center",
       className
     )}>
-      <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+      <h2 className={cn(
+        "font-playfair text-3xl md:text-4xl lg:text-5xl font-bold mb-2",
+        centered && "mx-auto"
+      )}>
         {title}
       </h2>
+      
+      {centered && (
+        <div className="flex items-center justify-center my-4">
+          <div className="w-16 h-0.5 bg-gold"></div>
+          <div className="w-2 h-2 rounded-full mx-2 bg-gold"></div>
+          <div className="w-16 h-0.5 bg-gold"></div>
+        </div>
+      )}
+      
       {subtitle && (
-        <p className="text-muted-foreground text-lg md:max-w-3xl">
+        <p className={cn(
+          "text-muted-foreground text-lg",
+          centered ? "max-w-2xl mx-auto" : "md:max-w-3xl"
+        )}>
           {subtitle}
         </p>
       )}

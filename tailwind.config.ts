@@ -55,8 +55,16 @@ export default {
 				},
 				silver: {
 					light: '#F1F0FB',
-					DEFAULT: '#C8C8C9',
+					DEFAULT: '#C0C0C0',
 					dark: '#8E9196',
+				},
+				gold: {
+					DEFAULT: '#D4AF37',
+					light: '#F8EBC6',
+				},
+				charcoal: {
+					DEFAULT: '#333333',
+					light: '#555555',
 				},
 				jewel: {
 					purple: '#E5DEFF',
@@ -67,7 +75,7 @@ export default {
 			},
 			fontFamily: {
 				playfair: ['Playfair Display', 'serif'],
-				inter: ['Inter', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -127,6 +135,14 @@ export default {
 					"50%": {
 						transform: "translateY(-4px)"
 					}
+				},
+				"float": {
+					"0%, 100%": {
+						transform: "translateY(0)"
+					},
+					"50%": {
+						transform: "translateY(-10px)"
+					}
 				}
 			},
 			animation: {
@@ -136,7 +152,11 @@ export default {
 				"fade-up": "fade-up 0.7s ease-out forwards",
 				"typing": "typing 2s steps(20, end)",
 				"blink": "blink 1s infinite",
-				"bounce-subtle": "bounce-subtle 2s infinite"
+				"bounce-subtle": "bounce-subtle 2s infinite",
+				"float": "float 6s ease-in-out infinite"
+			},
+			backgroundImage: {
+			  'hero-pattern': "url('https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')",
 			},
 		},
 	},
