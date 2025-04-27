@@ -45,16 +45,12 @@ const ContactSection = () => {
       
       // Here in a real application, you would connect to Google Sheets using Apps Script
       // The following is a mockup of that process
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulating API call
-      
-      // Reset form
-      setFormState({
-        name: "",
-        email: "",
-        phone: "",
-        businessType: "",
-        productInterest: "",
-        message: "",
+      await fetch("https://script.google.com/macros/s/AKfycbwFZAbaYn8QOmZd3BtB2vfYBhVw4lOBq_XaBJGHMQR1NnnfgqcyxlYG_FNi4aqeUz-CHQ/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
       });
       
       toast.success("Your inquiry has been submitted successfully! We'll contact you soon.", {
@@ -62,7 +58,7 @@ const ContactSection = () => {
       });
       
     } catch (error) {
-      toast.error("There was an error submitting your form. Please try again.", {
+      toast.error(`There was an error submitting your form. Please try again. ${error}`, {
         position: "bottom-right",
       });
       console.error("Form submission error:", error);

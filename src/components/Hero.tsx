@@ -27,7 +27,7 @@ const Hero = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 to-charcoal/20 z-10"></div>
         <img
-          src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+          src="https://images.unsplash.com/photo-1561995734-ef4b62bb6586?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Premium silver jewelry collection by Omsilver"
           className="w-full h-full object-cover object-center"
         />
