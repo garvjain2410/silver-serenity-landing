@@ -9,6 +9,7 @@ interface TimelineCardProps {
   description: string;
   className?: string;
   isActive?: boolean;
+  onClick?: () => void;  // Added onClick prop
 }
 
 const TimelineCard = ({
@@ -17,9 +18,10 @@ const TimelineCard = ({
   description,
   className,
   isActive = false,
+  onClick,  // Added onClick to the props
 }: TimelineCardProps) => {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative", className)} onClick={onClick}>  // Added onClick handler here
       <div className="absolute left-0 h-full w-px bg-silver/20" />
       <div
         className={cn(
