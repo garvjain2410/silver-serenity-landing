@@ -102,11 +102,15 @@ const ContactSection = () => {
   }, []);
 
   return (
-    <section id="contact" className="py-24 bg-gradient-to-b from-white to-silver-light relative" ref={sectionRef}>
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-gold/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      
-      <Container>
+    <section
+    id="contact"
+    className="py-24 bg-white relative"
+    ref={sectionRef}
+  >
+    {/* Decorative elements */}
+    {/* <div className="absolute top-0 right-0 w-72 h-72 bg-gold/5 rounded-full -translate-y-1/2 translate-x-1/2"></div> */}
+    
+    <Container>
         <SectionTitle
           title="Contact Us"
           subtitle="Ready to elevate your collection with our premium silver jewelry? Reach out to us for inquiries and partnership opportunities."
@@ -118,20 +122,20 @@ const ContactSection = () => {
             <Card className="overflow-hidden border-0 shadow-lg h-full">
               <div className="h-40 bg-charcoal relative">
               <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3773.546149148594!2d72.82932367547846!3d18.951472682227692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf0b22d4b015%3A0x1a3eacc710ab50d9!2sOm%20silver!5e0!3m2!1sen!2sin!4v1745854987489!5m2!1sen!2sin"
-      width="600"
-      height="250"
-      style={{ border: 0 }}
-      allowFullScreen= {true}
-      loading="lazy"
-      referrerPolicy="no-referrer-when-downgrade"
-    ></iframe>
-                <div className="absolute inset-0 flex items-center justify-center">
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3773.546149148594!2d72.82932367547846!3d18.951472682227692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf0b22d4b015%3A0x1a3eacc710ab50d9!2sOm%20silver!5e0!3m2!1sen!2sin!4v1745854987489!5m2!1sen!2sin"
+                  width="600"
+                  height="250"
+                  style={{ border: 0 }}
+                  allowFullScreen= {true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                {/* <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-white">
                     <h3 className="font-playfair text-2xl font-bold">Omsilver</h3>
                     <p className="text-silver-light">Premium Silver Jewelry Since 1985</p>
                   </div>
-                </div>
+                </div> */}
               </div>
               
               <CardContent className="p-6">
@@ -192,8 +196,8 @@ const ContactSection = () => {
           </div>
           
           <div className="slide-in" style={{ transitionDelay: "200ms" }}>
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
+          <Card className="border-0 shadow-lg">
+            <CardContent className="p-6">
                 <h3 className="font-playfair text-2xl font-bold mb-6">Wholesale Inquiry</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="space-y-4">
