@@ -45,8 +45,9 @@ const ContactSection = () => {
       
       // Here in a real application, you would connect to Google Sheets using Apps Script
       // The following is a mockup of that process
-      await fetch("https://script.google.com/macros/s/AKfycbwFZAbaYn8QOmZd3BtB2vfYBhVw4lOBq_XaBJGHMQR1NnnfgqcyxlYG_FNi4aqeUz-CHQ/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbx8ua_SXfpJfWEnn53_JwsR3AYlwXJnrZMZ6Ah92xCaidSCXYLXlXA67BvYNCw5rW7tlg/exec", {
         method: "POST",
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,6 +56,15 @@ const ContactSection = () => {
       
       toast.success("Your inquiry has been submitted successfully! We'll contact you soon.", {
         position: "bottom-right",
+      });
+
+      setFormState({
+        name: "",
+        email: "",
+        phone: "",
+        businessType: "",
+        productInterest: "",
+        message: "",
       });
       
     } catch (error) {
@@ -107,12 +117,15 @@ const ContactSection = () => {
           <div className="slide-in">
             <Card className="overflow-hidden border-0 shadow-lg h-full">
               <div className="h-40 bg-charcoal relative">
-                <div className="absolute inset-0 opacity-70" style={{
-                  backgroundImage: "url('https://maps.googleapis.com/maps/api/staticmap?center=Mumbai,Maharashtra&zoom=13&size=600x300&maptype=roadmap&markers=color:gold%7CMumbai,Maharashtra&key=YOUR_API_KEY')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}>
-                </div>
+              <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3773.546149148594!2d72.82932367547846!3d18.951472682227692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cf0b22d4b015%3A0x1a3eacc710ab50d9!2sOm%20silver!5e0!3m2!1sen!2sin!4v1745854987489!5m2!1sen!2sin"
+      width="600"
+      height="250"
+      style={{ border: 0 }}
+      allowFullScreen= {true}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+    ></iframe>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-white">
                     <h3 className="font-playfair text-2xl font-bold">Omsilver</h3>
@@ -245,7 +258,7 @@ const ContactSection = () => {
                           <SelectTrigger className="border-silver">
                             <SelectValue placeholder="Select business type" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-white">
                             <SelectItem value="retail">Retail Store</SelectItem>
                             <SelectItem value="online">Online Shop</SelectItem>
                             <SelectItem value="distributor">Distributor</SelectItem>
@@ -266,7 +279,7 @@ const ContactSection = () => {
                           <SelectTrigger className="border-silver">
                             <SelectValue placeholder="Select product interest" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="bg-white">
                             <SelectItem value="necklaces">Necklaces</SelectItem>
                             <SelectItem value="earrings">Earrings</SelectItem>
                             <SelectItem value="bracelets">Bracelets</SelectItem>
