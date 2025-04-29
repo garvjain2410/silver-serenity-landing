@@ -62,8 +62,8 @@ const TestimonialsSection = () => {
   return (
     <section id="testimonials" className="py-24 bg-silver-light relative" ref={sectionRef}>
       {/* Decorative patterns */}
-      <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-silver/20 rounded-bl-full"></div>
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gold/5 rounded-tr-full"></div>
+      {/* <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-silver/20 rounded-bl-full"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gold/5 rounded-tr-full"></div> */}
 
       <Container>
         <SectionTitle

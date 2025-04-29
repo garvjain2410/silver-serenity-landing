@@ -70,7 +70,7 @@ const ProductsSection = () => {
   return (
     <section id="products" className="py-24 bg-white relative" ref={sectionRef}>
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-silver-light rounded-full opacity-50 -translate-y-1/2 -translate-x-1/2"></div>
+      {/* <div className="absolute top-0 left-0 w-64 h-64 bg-silver-light rounded-full opacity-50 -translate-y-1/2 -translate-x-1/2"></div> */}
       
       <Container>
         <SectionTitle

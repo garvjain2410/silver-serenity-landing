@@ -64,7 +64,7 @@ const AboutSection = () => {
           </div>
           <div className="order-1 md:order-2 relative">
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-gold/20 rounded-full opacity-50 -z-10"></div>
-            <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-silver rounded-full opacity-20 -z-10"></div>
+            {/* <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-silver rounded-full opacity-20 -z-10"></div> */}
             <div className="slide-in h-full">
               <div className="relative h-96 w-full">
                 <img
