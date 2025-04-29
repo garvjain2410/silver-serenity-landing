@@ -55,7 +55,10 @@ const Header = () => {
             <a
               key={item.label}
               href={item.href}
-              className="text-sm font-medium hover:text-primary transition-colors"
+              className={cn(
+                "text-sm font-medium transition-colors duration-300",
+                isScrolled ? "text-primary-dark hover:text-primary" : "text-white hover:text-silver"
+              )}
             >
               {item.label}
             </a>

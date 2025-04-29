@@ -8,24 +8,24 @@ import { Card, CardContent } from "@/components/ui/card";
 const PRODUCTS = [
   {
     id: 1,
-    name: "Traditional Silver Necklace",
-    image: "https://images.unsplash.com/photo-1635767798638-3665968aa33a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-    category: "Necklaces",
+    name: "Traditional Silver Murtis",
+    image: "https://i.postimg.cc/8cjtjjq8/murti.png",
+    category: "Murti",
     description: "Intricately designed traditional necklace featuring handcrafted patterns",
     minOrder: "20 units"
   },
   {
     id: 2,
-    name: "Silver Drop Earrings",
-    image: "https://images.unsplash.com/photo-1675881149220-d93fff208f60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-    category: "Earrings",
+    name: "Silver Payal",
+    image: "https://i.postimg.cc/G2ZqTcrH/payal.png",
+    category: "Payal",
     description: "Elegant drop earrings that add sophistication to any outfit",
     minOrder: "30 units"
   },
   {
     id: 3,
     name: "Sterling Silver Bracelet",
-    image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    image: "https://i.postimg.cc/Ls8yrCN6/IMG-0937.png",
     category: "Bracelets",
     description: "Fine sterling silver bracelet with timeless design",
     minOrder: "15 units"
@@ -33,7 +33,7 @@ const PRODUCTS = [
   {
     id: 4,
     name: "Silver Statement Ring",
-    image: "https://images.unsplash.com/photo-1603974372039-adc49044b6bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+    image: "https://img.freepik.com/premium-photo/silver-ring-black-background-macro-picture_10069-97.jpg",
     category: "Rings",
     description: "Bold statement ring perfect for special occasions",
     minOrder: "25 units"

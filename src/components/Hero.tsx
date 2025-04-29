@@ -36,7 +36,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-20">
         <div className="max-w-3xl">
           <div className="mb-2 inline-block py-1 px-3 bg-gold/20 text-gold rounded-full">
-            <span className="text-sm font-medium">Since 1985</span>
+            <span className="text-sm font-medium text-silver">Since 1992</span>
           </div>
 
           <div className={`transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
