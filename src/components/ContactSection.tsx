@@ -260,7 +260,7 @@ const ContactSection = () => {
                             <SelectItem value="retail">Retail Store</SelectItem>
                             <SelectItem value="online">Online Shop</SelectItem>
                             <SelectItem value="distributor">Distributor</SelectItem>
-                            <SelectItem value="designer">Jewelry Designer</SelectItem>
+                            <SelectItem value="designer">JewelleryDesigner</SelectItem>
                             <SelectItem value="other">Other</SelectItem>
                           </SelectContent>
                         </Select>

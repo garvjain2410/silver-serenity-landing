@@ -37,11 +37,11 @@ const AboutSection = () => {
           <div className="order-2 md:order-1">
             <SectionTitle
               title="About Omsilver"
-              subtitle="Premium Sterling Silver Jewelry Since 1985"
+              subtitle="Premium Sterling Silver jewellerySince 1985"
             />
             <div className="slide-in">
               <p className="mb-6 text-lg">
-                Omsilver is a distinguished silversmith dynasty from Mumbai, dedicated to preserving the ancient art of silver jewelry craftsmanship while embracing innovation across three generations.
+                Omsilver is a distinguished silversmith dynasty from Mumbai, dedicated to preserving the ancient art of silver jewellerycraftsmanship while embracing innovation across three generations.
               </p>
             </div>
             <div className="slide-in" style={{ transitionDelay: "200ms" }}>
@@ -69,7 +69,7 @@ const AboutSection = () => {
               <div className="relative h-96 w-full">
                 <img
                   src="https://i.postimg.cc/G2ZqTcrH/payal.png"
-                  alt="Silver jewelry craftsmanship at Omsilver"
+                  alt="Silver jewellerycraftsmanship at Omsilver"
                   className="rounded-lg object-cover w-full h-full hover-shine shadow-lg"
                 />
               </div>

@@ -28,7 +28,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 to-charcoal/20 z-10"></div>
         <img
           src="https://images.unsplash.com/photo-1561995734-ef4b62bb6586?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Premium silver jewelry collection by Omsilver"
+          alt="Premium silver Jewellerycollection by Omsilver"
           className="w-full h-full object-cover object-center"
         />
       </div>
@@ -41,14 +41,14 @@ const Hero = () => {
 
           <div className={`transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white">
-              Exquisite Silver Jewelry <br />
+              Exquisite Silver Jewellery<br />
               <span className="text-silver">Craftsmanship</span>
             </h1>
           </div>
           
           <div className={`transition-all duration-1000 delay-500 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <p className="text-lg md:text-xl text-silver/90 mb-8 max-w-2xl">
-              Discover our premium silver jewelry collection crafted with precision and elegance by three generations of artisans from Mumbai.
+              Discover our premium silver jewellerycollection crafted with precision and elegance by three generations of artisans from Mumbai.
             </p>
           </div>
           

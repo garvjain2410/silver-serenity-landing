@@ -1,30 +1,21 @@
-
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { MessageSquare, X, Send } from 'lucide-react';
+import { MessageSquare, X, Send, Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface Message {
-  id: number;
-  content: string;
-  sender: 'user' | 'bot';
-  timestamp: Date;
-}
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
     {
-      id: 1,
-      content: "Hello! I'm Silvia, your jewelry assistant. How can I help you today? Whether you have questions about our products, wholesale opportunities, or anything else, I'm here to assist!",
-      sender: 'bot',
-      timestamp: new Date(),
-    }
+      sender: 'Chatbot',
+      text: "Hello! I'm Silvia, your Jewelleryassistant. How can I help you today? Whether you have questions about our products, wholesale opportunities, or anything else, I'm here to assist!",
+    },
   ]);
-  const [isTyping, setIsTyping] = useState(false);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const messageEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,68 +28,44 @@ const ChatBot = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages]);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSendMessage = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    
-    if (!message.trim()) return;
-    
-    const userMessage: Message = {
-      id: messages.length + 1,
-      content: message.trim(),
-      sender: 'user',
-      timestamp: new Date(),
-    };
-    
-    setMessages([...messages, userMessage]);
-    setMessage('');
-    setIsTyping(true);
-    
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponse = generateBotResponse(message.trim().toLowerCase());
-      const botMessage: Message = {
-        id: messages.length + 2,
-        content: botResponse,
-        sender: 'bot',
-        timestamp: new Date(),
-      };
-      
-      setMessages(prev => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1000 + Math.random() * 1500); // Random delay to simulate typing
-  };
+  const handleSend = async () => {
+    if (!input.trim()) return;
 
-  const generateBotResponse = (query: string): string => {
-    if (query.includes('hi') || query.includes('hello') || query.includes('hey')) {
-      return "Hello there! How can I help you with our silver jewelry collection today?";
-    } else if (query.includes('pricing') || query.includes('price') || query.includes('cost')) {
-      return "Our wholesale prices vary based on quantity and product line. We offer competitive pricing with volume discounts. Please fill out our inquiry form, and our team will provide a detailed price list suited to your business needs.";
-    } else if (query.includes('minimum') || query.includes('order') || query.includes('quantity')) {
-      return "Our minimum order is typically 20-40 pieces depending on the collection. For new wholesalers, we offer starter packages that allow you to test different product lines with lower minimum orders.";
-    } else if (query.includes('delivery') || query.includes('shipping') || query.includes('shipment')) {
-      return "We ship worldwide using trusted carriers like DHL and FedEx. Domestic orders typically arrive in 3-5 business days, while international shipments take 7-10 business days. Orders over $1000 qualify for free shipping.";
-    } else if (query.includes('custom') || query.includes('customize') || query.includes('personalize')) {
-      return "Yes, we offer customization services for bulk orders, including custom designs, packaging, and branding. Our design team can work with you to create exclusive pieces for your store.";
-    } else if (query.includes('catalog') || query.includes('brochure') || query.includes('collection')) {
-      return "I'd be happy to share our latest catalog! Please provide your email through our contact form, and we'll send you our complete product catalog along with our wholesale terms.";
-    } else if (query.includes('discount') || query.includes('sale') || query.includes('promotion')) {
-      return "We offer tiered discount structures based on order volume. First-time wholesalers receive a 10% welcome discount. Seasonal promotions are also available throughout the year.";
-    } else if (query.includes('material') || query.includes('quality') || query.includes('sterling')) {
-      return "All our jewelry is crafted from premium 925 Sterling Silver, with select pieces featuring gold plating options. We provide certificates of authenticity for all our products, ensuring the highest quality standards.";
-    } else if (query.includes('return') || query.includes('exchange') || query.includes('warranty')) {
-      return "We offer a 30-day return policy for defective items. Each piece comes with a 1-year warranty against manufacturing defects. Please refer to our wholesale terms for detailed information on our quality guarantee.";
-    } else if (query.includes('contact') || query.includes('speak') || query.includes('representative')) {
-      return "Our wholesale team would be delighted to speak with you! Please fill out the contact form with your details, and a dedicated account manager will reach out within 24 hours.";
-    } else if (query.includes('thank')) {
-      return "You're welcome! If you have any other questions, feel free to ask. I'm here to help you with all your silver jewelry wholesale needs!";
-    } else {
-      return "Thank you for your message. To better assist you, would you like to know about our wholesale programs, product collections, or custom design services? You can also fill out our inquiry form for personalized assistance.";
+    // Add user message to chat history
+    setMessages((prev) => [...prev, { sender: 'User', text: input }]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const genAI = new GoogleGenerativeAI('AIzaSyD4kreDcl5Up14ZQWGDeHNe-7cxWGIoq9w'); // Replace with your API key
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+      const prompt = `You are a helpful and knowledgeable assistant for a silver whole store named . Respond to the user's queries about silver products, including jewelry, utensils, and other items. Provide detailed and friendly answers, and suggest products or care tips when appropriate. always make sure that responses are not more than 50 words long 
+
+      User: ${input}
+      
+      Assistant:`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      // Add chatbot response to chat history
+      setMessages((prev) => [...prev, { sender: 'Chatbot', text }]);
+    } catch (error) {
+      console.error('Error generating chatbot response:', error);
+      setMessages((prev) => [
+        ...prev,
+        { sender: 'Chatbot', text: 'Sorry, something went wrong. Please try again.' },
+      ]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -131,7 +98,7 @@ const ChatBot = () => {
               </div>
               <div>
                 <h3 className="text-white font-medium">Silvia</h3>
-                <p className="text-xs text-white/70">Jewelry Assistant</p>
+                <p className="text-xs text-white/70">JewelleryAssistant</p>
               </div>
             </div>
             <Button
@@ -147,34 +114,27 @@ const ChatBot = () => {
           {/* Chat Messages */}
           <div className="p-4 h-[400px] overflow-y-auto bg-white">
             <div className="space-y-4">
-              {messages.map((msg) => (
+              {messages.map((msg, index) => (
                 <div
-                  key={msg.id}
+                  key={index}
                   className={cn(
                     "flex",
-                    msg.sender === "user" ? "justify-end" : "justify-start"
+                    msg.sender === 'User' ? "justify-end" : "justify-start"
                   )}
                 >
                   <div
                     className={cn(
                       "max-w-[80%] rounded-lg p-3",
-                      msg.sender === "user"
+                      msg.sender === 'User'
                         ? "bg-silver-dark text-white rounded-tr-none"
                         : "bg-silver-light text-gray-800 rounded-tl-none"
                     )}
                   >
-                    <p>{msg.content}</p>
-                    <p className="text-xs opacity-70 text-right mt-1">
-                      {msg.timestamp.toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
+                    <p>{msg.text}</p>
                   </div>
                 </div>
               ))}
-
-              {isTyping && (
+              {loading && (
                 <div className="flex justify-start">
                   <div className="bg-silver-light text-gray-800 rounded-lg rounded-tl-none p-3 max-w-[80%]">
                     <div className="flex space-x-2">
@@ -190,24 +150,24 @@ const ChatBot = () => {
           </div>
 
           {/* Chat Input */}
-          <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 bg-white">
+          <div className="p-4 border-t border-gray-200 bg-white">
             <div className="flex gap-2">
               <Input
                 ref={inputRef}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Type your message..."
                 className="flex-grow"
               />
               <Button
-                type="submit"
-                disabled={!message.trim()}
+                onClick={handleSend}
+                disabled={loading}
                 className="bg-silver-dark hover:bg-silver-dark/90 text-white"
               >
-                <Send size={18} />
+                {loading ? <Loader className="animate-spin w-5 h-5" /> : <Send size={18} />}
               </Button>
             </div>
-          </form>
+          </div>
         </Card>
       </div>
     </>

@@ -11,7 +11,7 @@ const TESTIMONIALS = [
     name: "Priya Sharma",
     company: "Elegance Boutique, Delhi",
     image: "https://randomuser.me/api/portraits/women/12.jpg",
-    content: "Omsilver's jewelry collection has transformed our boutique offerings. Their craftsmanship is unparalleled and our customers immediately recognize the quality. The traditional designs with modern touches are exactly what our market demands.",
+    content: "Omsilver's jewellerycollection has transformed our boutique offerings. Their craftsmanship is unparalleled and our customers immediately recognize the quality. The traditional designs with modern touches are exactly what our market demands.",
     rating: 5,
   },
   {
@@ -27,7 +27,7 @@ const TESTIMONIALS = [
     name: "Anita Desai",
     company: "Royal Jewels, Jaipur",
     image: "https://randomuser.me/api/portraits/women/23.jpg",
-    content: "I've been sourcing silver jewelry for over a decade, and Omsilver stands out for their consistency and attention to detail. Their pieces tell a story of tradition while appealing to contemporary tastes - a remarkable balance.",
+    content: "I've been sourcing silver jewelleryfor over a decade, and Omsilver stands out for their consistency and attention to detail. Their pieces tell a story of tradition while appealing to contemporary tastes - a remarkable balance.",
     rating: 5,
   },
 ];

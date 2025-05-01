@@ -13,7 +13,7 @@ const Footer = () => {
               Silver<span className="text-silver">Elite</span>
             </h3>
             <p className="text-gray-400 mb-4">
-              Premium wholesale silver jewelry crafted with precision and elegance since 2005.
+              Premium wholesale silver jewellerycrafted with precision and elegance since 2005.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-silver transition-colors">

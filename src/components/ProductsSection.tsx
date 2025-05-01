@@ -4,7 +4,7 @@ import Container from "./Container";
 import SectionTitle from "./SectionTitle";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Sample product data with silver jewelry items
+// Sample product data with silver jewelleryitems
 const PRODUCTS = [
   {
     id: 1,
@@ -75,7 +75,7 @@ const ProductsSection = () => {
       <Container>
         <SectionTitle
           title="Featured Collections"
-          subtitle="Explore our curated collection of premium silver jewelry pieces, handcrafted by our artisans"
+          subtitle="Explore our curated collection of premium silver jewellerypieces, handcrafted by our artisans"
           centered
         />
         
