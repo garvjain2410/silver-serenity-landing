@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Mail, MapPin, Phone } from "lucide-react";
 
+const apiUrl = import.meta.env.GOOGLE_APPSCRIPT_API_URL
+
 const ContactSection = () => {
   const [formState, setFormState] = useState({
     name: "",
@@ -44,7 +46,7 @@ const ContactSection = () => {
       
       // Here in a real application, you would connect to Google Sheets using Apps Script
       // The following is a mockup of that process
-      await fetch("https://script.google.com/macros/s/AKfycbx8ua_SXfpJfWEnn53_JwsR3AYlwXJnrZMZ6Ah92xCaidSCXYLXlXA67BvYNCw5rW7tlg/exec", {
+      await fetch(apiUrl, {
         method: "POST",
         mode: "no-cors",
         headers: {

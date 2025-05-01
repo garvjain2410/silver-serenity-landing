@@ -6,6 +6,9 @@ import { MessageSquare, X, Send, Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+
+const apiKey = import.meta.env.VITE_GOOGLE_GENERATIVE_AI_API_KEY;;
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([
@@ -43,7 +46,7 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
-      const genAI = new GoogleGenerativeAI('AIzaSyD4kreDcl5Up14ZQWGDeHNe-7cxWGIoq9w'); // Replace with your API key
+      const genAI = new GoogleGenerativeAI(apiKey); // Replace with your API key
       const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
       const prompt = `You are a helpful and knowledgeable assistant for a silver whole store named . Respond to the user's queries about silver products, including jewelry, utensils, and other items. Provide detailed and friendly answers, and suggest products or care tips when appropriate. always make sure that responses are not more than 50 words long 
