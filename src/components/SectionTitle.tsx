@@ -5,11 +5,12 @@ import { ReactNode } from "react";
 interface SectionTitleProps {
   title: string;
   subtitle?: string | ReactNode;
+  description?: string;
   centered?: boolean;
   className?: string;
 }
 
-const SectionTitle = ({ title, subtitle, centered = false, className }: SectionTitleProps) => {
+const SectionTitle = ({ title, subtitle, description, centered = false, className }: SectionTitleProps) => {
   return (
     <div className={cn(
       "mb-12",
@@ -37,6 +38,15 @@ const SectionTitle = ({ title, subtitle, centered = false, className }: SectionT
           centered ? "max-w-2xl mx-auto" : "md:max-w-3xl"
         )}>
           {subtitle}
+        </p>
+      )}
+      
+      {description && (
+        <p className={cn(
+          "text-gray-600 mt-2",
+          centered ? "max-w-2xl mx-auto" : "md:max-w-3xl"
+        )}>
+          {description}
         </p>
       )}
     </div>
