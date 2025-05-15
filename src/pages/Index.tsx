@@ -1,14 +1,16 @@
 
+import { lazy, Suspense, useEffect } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import AboutSection from "@/components/AboutSection";
-import ProductsSection from "@/components/ProductsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import BlogSection from "@/components/BlogSection";
-import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ChatBot from "@/components/ChatBot";
-import { useEffect } from "react";
+
+// Lazy load components
+const AboutSection = lazy(() => import("@/components/AboutSection"));
+const ProductsSection = lazy(() => import("@/components/ProductsSection"));
+const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
+const BlogSection = lazy(() => import("@/components/BlogSection"));
+const ContactSection = lazy(() => import("@/components/ContactSection"));
 
 const Index = () => {
   useEffect(() => {
@@ -36,16 +38,23 @@ const Index = () => {
     };
   }, []);
 
+  // Function to render a section with Suspense
+  const renderSection = (Component: React.LazyExoticComponent<() => JSX.Element>) => (
+    <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading section...</div>}>
+      <Component />
+    </Suspense>
+  );
+
   return (
     <div className="min-h-screen w-full">
       <Header />
       <main>
         <Hero />
-        <AboutSection />
-        <ProductsSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <ContactSection />
+        {renderSection(AboutSection)}
+        {renderSection(ProductsSection)}
+        {renderSection(TestimonialsSection)}
+        {renderSection(BlogSection)}
+        {renderSection(ContactSection)}
       </main>
       <Footer />
       <ChatBot />
