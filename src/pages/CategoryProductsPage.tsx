@@ -47,6 +47,11 @@ const CategoryProductsPage = () => {
   // Get category display name with proper capitalization
   const categoryDisplayName = category ? category.charAt(0).toUpperCase() + category.slice(1) : '';
 
+  // Helper function to get the primary image from a product
+  const getPrimaryImage = (product: Product) => {
+    return Array.isArray(product.image) ? product.image[0] : product.image;
+  };
+
   return (
     <div className="min-h-screen w-full">
       <Header />
@@ -73,7 +78,7 @@ const CategoryProductsPage = () => {
               <Card key={product.id} className="overflow-hidden flex flex-col border-0 shadow-md hover:shadow-lg transition-all duration-300">
                 <Link to={`/products/${product.id}`} className="relative h-60 overflow-hidden">
                   <img
-                    src={product.image}
+                    src={getPrimaryImage(product)}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />

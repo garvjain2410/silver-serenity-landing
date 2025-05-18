@@ -38,9 +38,13 @@ const ProductsSection = () => {
     new Set(productsData.map(product => product.category))
   ).map(category => {
     const categoryProducts = productsData.filter(p => p.category === category);
+    // Extract the primary image, handling both string and array types
+    const productImage = categoryProducts[0].image;
+    const primaryImage = Array.isArray(productImage) ? productImage[0] : productImage;
+    
     return {
       name: category,
-      image: categoryProducts[0].image,
+      image: primaryImage, // Now this is guaranteed to be a string
       productCount: categoryProducts.length
     };
   }).slice(0, 4);
