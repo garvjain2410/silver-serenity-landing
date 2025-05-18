@@ -24,7 +24,7 @@ const Cart = () => {
     message += `Total: ₹${cartTotal.toLocaleString()}\n\n`;
     message += "Please provide more information about these items. Thank you!";
     
-    const phoneNumber = process.env.VITE_WHATSAPP_NUMBER || '918291692365';
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '918291692365';
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
   
