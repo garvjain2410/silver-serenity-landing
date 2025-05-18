@@ -25,6 +25,13 @@ const CategoryProductsPage = lazy(() =>
       return { default: () => <div>Error loading page</div> };
     })
 );
+const ProductDetailPage = lazy(() => 
+  import("./pages/ProductDetailPage")
+    .catch(error => {
+      console.error("Failed to load ProductDetailPage:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
@@ -52,6 +59,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/products/category/:category" element={<CategoryProductsPage />} />
+                <Route path="/products/:productId" element={<ProductDetailPage />} />
                 <Route path="/testimonials" element={<TestimonialsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/blog" element={<BlogIndex />} />
