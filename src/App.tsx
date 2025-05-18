@@ -9,17 +9,37 @@ import { LoadingProvider } from "./contexts/LoadingContext";
 import { CartProvider } from "./contexts/CartContext";
 import Loader from "./components/Loader";
 
-// Lazy load pages
+// Lazy load pages with error boundaries
 const Index = lazy(() => import("./pages/Index"));
-const ProductsPage = lazy(() => import("./pages/ProductsPage"));
-const CategoryProductsPage = lazy(() => import("./pages/CategoryProductsPage"));
+const ProductsPage = lazy(() => 
+  import("./pages/ProductsPage")
+    .catch(error => {
+      console.error("Failed to load ProductsPage:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
+const CategoryProductsPage = lazy(() => 
+  import("./pages/CategoryProductsPage")
+    .catch(error => {
+      console.error("Failed to load CategoryProductsPage:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
 const TestimonialsPage = lazy(() => import("./pages/TestimonialsPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+// Create query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -36,7 +56,6 @@ const App = () => (
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

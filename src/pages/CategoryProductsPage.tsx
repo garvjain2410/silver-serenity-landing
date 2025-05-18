@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,7 +13,7 @@ import { ArrowLeft, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CategoryProductsPage = () => {
-  const { category } = useParams();
+  const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
   
@@ -24,11 +24,11 @@ const CategoryProductsPage = () => {
   
   // Redirect if category doesn't exist
   useEffect(() => {
-    if (filteredProducts.length === 0) {
+    if (!category || filteredProducts.length === 0) {
       navigate('/products', { replace: true });
       toast.error("Category not found!");
     }
-  }, [filteredProducts, navigate]);
+  }, [category, filteredProducts.length, navigate]);
   
   // Handle add to cart
   const handleAddToCart = (product: Product) => {
