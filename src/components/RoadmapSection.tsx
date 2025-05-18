@@ -76,16 +76,14 @@ const RoadmapSection = () => {
               year={gen.year}
               description={gen.description}
               isActive={activeGeneration === gen.id}
-              className={`slide-in cursor-pointer max-w-3xl mx-auto ${
-                activeGeneration === gen.id ? "visible" : ""
-              }`}
+              className={activeGeneration === gen.id ? "visible" : ""}
               onClick={() => setActiveGeneration(gen.id)}
             />
           ))}
         </div>
         
         <div className="mt-20 flex justify-center">
-          <div className="flex flex-col items-center slide-in">
+          <div className="flex flex-col items-center">
             <Milestone className="w-10 h-10 text-gold mb-4" />
             <p className="text-center max-w-lg text-silver">
               Our journey continues as we blend age-old techniques with modern innovation, 
