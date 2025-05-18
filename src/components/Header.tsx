@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import Cart from "./Cart";
 
 interface NavItem {
   label: string;
@@ -12,7 +13,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Blog", href: "/blog" },
@@ -23,6 +23,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +55,9 @@ const Header = () => {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-white/90 backdrop-blur-md shadow-sm py-2"
-          : "bg-transparent py-4"
+          : isHomePage 
+            ? "bg-transparent py-4" 
+            : "bg-white py-4 shadow-sm"
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -73,7 +76,7 @@ const Header = () => {
               className={cn(
                 "text-sm font-medium transition-colors duration-300",
                 isActive(item.href) ? "text-primary font-semibold" : 
-                isScrolled ? "text-primary-dark hover:text-primary" : "text-white hover:text-silver"
+                (isScrolled || !isHomePage) ? "text-primary-dark hover:text-primary" : "text-white hover:text-silver"
               )}
             >
               {item.label}
@@ -81,18 +84,22 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile Navigation Toggle */}
-        <button
-          className="md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6 text-primary" />
-          ) : (
-            <Menu className="h-6 w-6 text-primary" />
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <Cart />
+          
+          {/* Mobile Navigation Toggle */}
+          <button
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6 text-primary" />
+            ) : (
+              <Menu className="h-6 w-6 text-primary" />
+            )}
+          </button>
+        </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (

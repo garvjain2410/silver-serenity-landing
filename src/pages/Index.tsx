@@ -8,9 +8,6 @@ import ChatBot from "@/components/ChatBot";
 // Lazy load components
 const AboutSection = lazy(() => import("@/components/AboutSection"));
 const ProductsSection = lazy(() => import("@/components/ProductsSection"));
-const TestimonialsSection = lazy(() => import("@/components/TestimonialsSection"));
-const BlogSection = lazy(() => import("@/components/BlogSection"));
-const ContactSection = lazy(() => import("@/components/ContactSection"));
 
 const Index = () => {
   useEffect(() => {
@@ -52,9 +49,6 @@ const Index = () => {
         <Hero />
         {renderSection(AboutSection)}
         {renderSection(ProductsSection)}
-        {renderSection(TestimonialsSection)}
-        {renderSection(BlogSection)}
-        {renderSection(ContactSection)}
       </main>
       <Footer />
       <ChatBot />
