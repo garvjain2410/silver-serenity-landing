@@ -40,7 +40,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Make sure .env variables are available
 // Check if we have the WhatsApp number available
-if (!process.env.VITE_WHATSAPP_NUMBER && process.env.NODE_ENV === 'development') {
+if (!import.meta.env.VITE_WHATSAPP_NUMBER && import.meta.env.DEV) {
   console.warn('VITE_WHATSAPP_NUMBER is not defined in .env file. Using default number.');
 }
 
