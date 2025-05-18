@@ -48,7 +48,7 @@ const ProductDetailPage = () => {
 
   const createWhatsAppLink = () => {
     if (!product) return '';
-    const phoneNumber = process.env.VITE_WHATSAPP_NUMBER || '918291692365';
+    const phoneNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '918291692365';
     const message = encodeURIComponent(
       `Hello, I'm interested in ordering *${product.name}* (SKU: ${product.sku || 'N/A'}). Please provide more information.`
     );
