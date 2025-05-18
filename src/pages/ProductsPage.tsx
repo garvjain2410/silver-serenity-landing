@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,7 +16,9 @@ const ProductsPage = () => {
     const categoryProducts = productsData.filter(p => p.category === category);
     const productCount = categoryProducts.length;
     // Use the first product image as category image
-    const firstProductImage = categoryProducts[0].image;
+    const firstProductImage = Array.isArray(categoryProducts[0].image) 
+      ? categoryProducts[0].image[0] 
+      : categoryProducts[0].image;
     
     return {
       name: category,

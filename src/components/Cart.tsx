@@ -3,12 +3,30 @@ import { useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
-import { ShoppingCart, Plus, Minus, X } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, X, SendHorizontal } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart, cartTotal, itemCount } = useCart();
   const [isOpen, setIsOpen] = useState(false);
+  
+  const createWhatsAppInquiryLink = () => {
+    if (cartItems.length === 0) return '';
+    
+    let message = "Hello, I'm interested in the following products:\n\n";
+    
+    cartItems.forEach((item, index) => {
+      message += `${index + 1}. ${item.name} (SKU: ${item.sku || 'N/A'})\n`;
+      message += `   Quantity: ${item.quantity}\n`;
+      message += `   Price: ₹${item.price.toLocaleString()}\n\n`;
+    });
+    
+    message += `Total: ₹${cartTotal.toLocaleString()}\n\n`;
+    message += "Please provide more information about these items. Thank you!";
+    
+    const phoneNumber = process.env.VITE_WHATSAPP_NUMBER || '918291692365';
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  };
   
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -24,14 +42,14 @@ const Cart = () => {
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md flex flex-col">
         <SheetHeader className="mb-4">
-          <SheetTitle className="font-playfair text-2xl">Shopping Cart</SheetTitle>
+          <SheetTitle className="font-playfair text-2xl">Product Inquiry</SheetTitle>
         </SheetHeader>
         
         {cartItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center flex-grow py-12">
             <ShoppingCart className="h-16 w-16 text-silver-dark mb-4" />
-            <p className="text-lg font-medium">Your cart is empty</p>
-            <p className="text-sm text-muted-foreground mt-2">Add some beautiful silver pieces to your cart!</p>
+            <p className="text-lg font-medium">Your inquiry list is empty</p>
+            <p className="text-sm text-muted-foreground mt-2">Add some beautiful silver pieces to your list!</p>
             <Button 
               className="mt-6"
               onClick={() => setIsOpen(false)}
@@ -47,7 +65,7 @@ const Cart = () => {
                   <div className="flex items-start gap-3">
                     <div className="w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
                       <img 
-                        src={item.image} 
+                        src={Array.isArray(item.image) ? item.image[0] : item.image} 
                         alt={item.name} 
                         className="w-full h-full object-cover"
                       />
@@ -97,10 +115,6 @@ const Cart = () => {
                 <span className="text-muted-foreground">Subtotal</span>
                 <span className="font-medium">₹{cartTotal.toLocaleString()}</span>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Shipping</span>
-                <span className="font-medium">Calculated at checkout</span>
-              </div>
               <Separator />
               <div className="flex items-center justify-between">
                 <span className="font-semibold">Total</span>
@@ -108,15 +122,21 @@ const Cart = () => {
               </div>
               
               <div className="flex flex-col gap-2 pt-2">
-                <Button className="w-full bg-gold text-charcoal hover:bg-gold/90">
-                  Proceed to Checkout
+                <Button 
+                  className="w-full bg-gold text-charcoal hover:bg-gold/90 flex items-center gap-2"
+                  asChild
+                >
+                  <a href={createWhatsAppInquiryLink()} target="_blank" rel="noopener noreferrer">
+                    <SendHorizontal className="h-4 w-4" />
+                    Send Inquiry via WhatsApp
+                  </a>
                 </Button>
                 <Button 
                   variant="outline" 
                   className="w-full"
                   onClick={clearCart}
                 >
-                  Clear Cart
+                  Clear List
                 </Button>
               </div>
             </div>

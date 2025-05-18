@@ -25,20 +25,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   
   // Load cart from localStorage on initial render
   useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
+    const savedCart = localStorage.getItem('inquiry');
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(savedCart);
         setCartItems(parsedCart);
       } catch (error) {
-        console.error('Failed to parse cart from localStorage:', error);
+        console.error('Failed to parse inquiry from localStorage:', error);
       }
     }
   }, []);
   
   // Update localStorage when cart changes
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    localStorage.setItem('inquiry', JSON.stringify(cartItems));
     
     // Calculate totals
     const count = cartItems.reduce((total, item) => total + item.quantity, 0);

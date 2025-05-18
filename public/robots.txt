@@ -1,14 +1,52 @@
+
+# Omsilver Website Robots.txt
+# https://omsilver.in/
+
 User-agent: Googlebot
 Allow: /
+Disallow: /admin/
+Disallow: /checkout/
 
 User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: Sogou
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+User-agent: facebookexternalhit
 Allow: /
 
 User-agent: Twitterbot
 Allow: /
 
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+
+# Sitemap
+Sitemap: https://omsilver.in/sitemap.xml

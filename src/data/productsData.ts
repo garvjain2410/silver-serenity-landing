@@ -1,7 +1,8 @@
+
 export interface Product {
   id: number;
   name: string;
-  image: string;
+  image: string | string[]; // Updated to support multiple images
   category: string;
   description: string;
   minOrder: string;
@@ -21,7 +22,11 @@ export const productsData: Product[] = [
   {
     id: 1,
     name: "Traditional Silver Murtis",
-    image: "https://i.postimg.cc/8cjtjjq8/murti.png",
+    image: [
+      "https://i.postimg.cc/8cjtjjq8/murti.png",
+      "https://i.postimg.cc/8cjtjjq8/murti.png",
+      "https://i.postimg.cc/Ls8yrCN6/IMG-0937.png"
+    ],
     category: "Murti",
     description: "Intricately designed traditional necklace featuring handcrafted patterns",
     minOrder: "20 units",
@@ -39,7 +44,10 @@ export const productsData: Product[] = [
   {
     id: 2,
     name: "Silver Payal",
-    image: "https://i.postimg.cc/G2ZqTcrH/payal.png",
+    image: [
+      "https://i.postimg.cc/G2ZqTcrH/payal.png",
+      "https://i.postimg.cc/8cjtjjq8/murti.png"
+    ],
     category: "Payal",
     description: "Elegant ankle bracelet that adds sophistication to any outfit",
     minOrder: "30 units",

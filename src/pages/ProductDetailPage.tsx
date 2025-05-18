@@ -8,7 +8,8 @@ import { productsData, Product } from '@/data/productsData';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Plus, ShoppingCart } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, Plus, SendHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 
 const ProductDetailPage = () => {
@@ -17,6 +18,7 @@ const ProductDetailPage = () => {
   const { addToCart } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     // Find product by ID
@@ -25,6 +27,7 @@ const ProductDetailPage = () => {
 
     if (foundProduct) {
       setProduct(foundProduct);
+      setActiveImageIndex(0);
       // Get related products from the same category
       const related = productsData
         .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
@@ -39,17 +42,26 @@ const ProductDetailPage = () => {
   const handleAddToCart = () => {
     if (product) {
       addToCart(product);
-      toast.success(`${product.name} added to cart!`);
+      toast.success(`${product.name} added to inquiry list!`);
     }
   };
 
   const createWhatsAppLink = () => {
     if (!product) return '';
+    const phoneNumber = process.env.VITE_WHATSAPP_NUMBER || '918291692365';
     const message = encodeURIComponent(
-      `Hello, I'm interested in ordering *${product.name}* (SKU: ${product.sku}). Please provide more information.`
+      `Hello, I'm interested in ordering *${product.name}* (SKU: ${product.sku || 'N/A'}). Please provide more information.`
     );
-    return `https://wa.me/918291692365?text=${message}`;
+    return `https://wa.me/${phoneNumber}?text=${message}`;
   };
+
+  // Handle product images
+  const getProductImages = () => {
+    if (!product) return [];
+    return Array.isArray(product.image) ? product.image : [product.image];
+  };
+
+  const productImages = getProductImages();
 
   if (!product) {
     return <div className="h-screen flex items-center justify-center">Loading...</div>;
@@ -72,14 +84,37 @@ const ProductDetailPage = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Product Image */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24 overflow-hidden rounded-lg border border-silver shadow-xl bg-white">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-auto object-cover aspect-square"
-                />
+            {/* Product Images */}
+            <div className="lg:col-span-1 space-y-4">
+              <div className="sticky top-24">
+                <div className="overflow-hidden rounded-lg border border-silver shadow-xl bg-white">
+                  <img
+                    src={productImages[activeImageIndex]}
+                    alt={product.name}
+                    className="w-full h-auto object-cover aspect-square"
+                  />
+                </div>
+                
+                {/* Thumbnail navigation */}
+                {productImages.length > 1 && (
+                  <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                    {productImages.map((image, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveImageIndex(index)}
+                        className={`w-16 h-16 border rounded-md overflow-hidden flex-shrink-0 ${
+                          activeImageIndex === index ? 'border-2 border-primary' : 'border-silver'
+                        }`}
+                      >
+                        <img 
+                          src={image} 
+                          alt={`${product.name} - View ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -94,66 +129,89 @@ const ProductDetailPage = () => {
                 <p className="text-muted-foreground mb-6">{product.seoDescription || product.description}</p>
               </div>
 
-              {/* Product Specs Table */}
-              <div className="overflow-x-auto border border-silver rounded-lg">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead colSpan={2} className="text-center bg-gray-50">
-                        Product Specifications
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">SKU</TableCell>
-                      <TableCell>{product.sku || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Category</TableCell>
-                      <TableCell>{product.category}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Silver Purity</TableCell>
-                      <TableCell>{product.purity || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Stone Type</TableCell>
-                      <TableCell>{product.stoneType || 'None'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Features</TableCell>
-                      <TableCell>
-                        <ul className="list-disc pl-4">
-                          {product.features?.map((feature, index) => (
+              <Tabs defaultValue="specifications" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="specifications">Specifications</TabsTrigger>
+                  <TabsTrigger value="description">Description</TabsTrigger>
+                </TabsList>
+                <TabsContent value="specifications" className="mt-4">
+                  {/* Product Specs Table */}
+                  <div className="overflow-x-auto border border-silver rounded-lg">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead colSpan={2} className="text-center bg-gray-50">
+                            Product Specifications
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">SKU</TableCell>
+                          <TableCell>{product.sku || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Category</TableCell>
+                          <TableCell>{product.category}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Silver Purity</TableCell>
+                          <TableCell>{product.purity || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Stone Type</TableCell>
+                          <TableCell>{product.stoneType || 'None'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Features</TableCell>
+                          <TableCell>
+                            <ul className="list-disc pl-4">
+                              {product.features?.map((feature, index) => (
+                                <li key={index}>{feature}</li>
+                              )) || 'N/A'}
+                            </ul>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Available Sizes</TableCell>
+                          <TableCell>{product.availableSizes || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Making Charges</TableCell>
+                          <TableCell>₹{product.makingCharges?.toLocaleString() || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Wastage</TableCell>
+                          <TableCell>{product.wastage || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Weight Range</TableCell>
+                          <TableCell>{product.weightRange || 'N/A'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-medium bg-gray-50">Minimum Order</TableCell>
+                          <TableCell>{product.minOrder}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </TabsContent>
+                <TabsContent value="description" className="mt-4">
+                  <div className="border border-silver rounded-lg p-4">
+                    <p className="mb-4">{product.seoDescription || product.description}</p>
+                    {product.features && (
+                      <div>
+                        <h3 className="font-medium mb-2">Key Features:</h3>
+                        <ul className="list-disc pl-6 space-y-1">
+                          {product.features.map((feature, index) => (
                             <li key={index}>{feature}</li>
-                          )) || 'N/A'}
+                          ))}
                         </ul>
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Available Sizes</TableCell>
-                      <TableCell>{product.availableSizes || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Making Charges</TableCell>
-                      <TableCell>₹{product.makingCharges?.toLocaleString() || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Wastage</TableCell>
-                      <TableCell>{product.wastage || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Weight Range</TableCell>
-                      <TableCell>{product.weightRange || 'N/A'}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell className="font-medium bg-gray-50">Minimum Order</TableCell>
-                      <TableCell>{product.minOrder}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
+                      </div>
+                    )}
+                  </div>
+                </TabsContent>
+              </Tabs>
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4 mt-8">
@@ -162,7 +220,7 @@ const ProductDetailPage = () => {
                   className="flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
-                  Add to Cart
+                  Add to Inquiry
                 </Button>
                 <Button
                   variant="outline"
@@ -174,8 +232,8 @@ const ProductDetailPage = () => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
                   >
-                    <ShoppingCart className="w-4 h-4" />
-                    Order via WhatsApp
+                    <SendHorizontal className="w-4 h-4" />
+                    Inquire via WhatsApp
                   </a>
                 </Button>
               </div>
@@ -192,7 +250,7 @@ const ProductDetailPage = () => {
                         className="block border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                       >
                         <img 
-                          src={relatedProduct.image}
+                          src={Array.isArray(relatedProduct.image) ? relatedProduct.image[0] : relatedProduct.image}
                           alt={relatedProduct.name}
                           className="w-full h-32 object-cover"
                         />
