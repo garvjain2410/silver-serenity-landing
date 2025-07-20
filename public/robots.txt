@@ -43,6 +43,19 @@ Allow: /
 User-agent: Twitterbot
 Allow: /
 
+# Allow AI crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+User-agent: Claude
+Allow: /
+
+User-agent: Bard
+Allow: /
+
 User-agent: *
 Allow: /
 Disallow: /admin/
