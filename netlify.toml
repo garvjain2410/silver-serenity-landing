@@ -1,6 +1,6 @@
 [build]
   functions = "netlify/functions"
-  publish = "build" # Replace with your build output directory (e.g., "dist" for Vue)
+  publish = "dist" # Updated to match the correct build output directory for Vite
 
 [[redirects]]
   from = "/sitemap.xml"
