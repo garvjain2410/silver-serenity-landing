@@ -11,8 +11,8 @@ console.log("Firebase API Key:", import.meta.env.VITE_FIREBASE_API_KEY);
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "fallback-api-key", // Add fallback
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "fallback-auth-domain",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY ,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ,
   projectId: "blog-8ddd7",
   storageBucket: "blog-8ddd7.firebasestorage.app",
   messagingSenderId: "753090311814",

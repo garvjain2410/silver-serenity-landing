@@ -1,14 +1,16 @@
 const admin = require('firebase-admin');
-const { firebaseConfig } = require('../../src/firebaseConfig'); // Adjust the path as needed
+
+// Add Firebase configuration directly in the function to avoid path issues
+const firebaseConfig = {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+};
 
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: firebaseConfig.projectId,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL, // Use environment variables for sensitive data
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Use environment variables for private key
-    }),
+    credential: admin.credential.cert(firebaseConfig),
   });
 }
 
