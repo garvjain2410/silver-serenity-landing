@@ -1,10 +1,29 @@
+const admin = require('firebase-admin');
+const { firebaseConfig } = require('../../src/firebaseConfig'); // Adjust the path as needed
 
-const axios = require('axios');
+// Initialize Firebase Admin SDK
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: firebaseConfig.projectId,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL, // Use environment variables for sensitive data
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'), // Use environment variables for private key
+    }),
+  });
+}
+
+const db = admin.firestore();
 
 exports.handler = async (event, context) => {
   try {
-    // Fetch blog data from the backend
-    const { data: blogs } = await axios.get('https://api.omsilver.in/blogs'); // Replace with your API endpoint
+    // Fetch blog data from Firestore
+    const blogsSnapshot = await db.collection('blogPosts').get();
+    const blogs = blogsSnapshot.docs.map(doc => ({
+      slug: doc.data().slug,
+      updatedAt: doc.data().metadata.datePublished, // Use `metadata.datePublished` for lastmod
+      title: doc.data().metadata.title, // Include title for debugging or future use
+      description: doc.data().metadata.description, // Include description for debugging or future use
+    }));
 
     // Generate dynamic blog URLs
     const blogUrls = blogs.map(blog => `
