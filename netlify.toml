@@ -6,3 +6,7 @@
   from = "/sitemap.xml"
   to = "/.netlify/functions/sitemap"
   status = 200
+
+[dev]
+  targetPort = 8081 # Match this to the port Vite is running on
+  framework = "vite" # Optional: Explicitly specify the framework
