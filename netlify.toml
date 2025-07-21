@@ -8,6 +8,7 @@
   status = 200
 
 [context.production.environment]
-  FIREBASE_PROJECT_ID = "blog-8ddd7"
-  FIREBASE_CLIENT_EMAIL = "garvjain2410@gmail.com"
-  FIREBASE_PRIVATE_KEY = "AIzaSyA8Zv-a_suvhBbMS19VknPnKCLZj1gsaAc"
+  # Remove sensitive values from here and set them in the Netlify dashboard
+  FIREBASE_PROJECT_ID = ""
+  FIREBASE_CLIENT_EMAIL = ""
+  FIREBASE_PRIVATE_KEY = ""
