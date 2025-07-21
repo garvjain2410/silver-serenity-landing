@@ -6,9 +6,3 @@
   from = "/sitemap.xml"
   to = "/.netlify/functions/sitemap"
   status = 200
-
-[context.production.environment]
-  # Remove sensitive values from here and set them in the Netlify dashboard
-  FIREBASE_PROJECT_ID = ""
-  FIREBASE_CLIENT_EMAIL = ""
-  FIREBASE_PRIVATE_KEY = ""
