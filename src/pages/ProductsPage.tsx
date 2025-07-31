@@ -1,31 +1,50 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchProductsData, Product } from '@/data/productsData';
 import { Link } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import SectionTitle from "@/components/SectionTitle";
-import { productsData } from '@/data/productsData';
 import { Card, CardContent } from '@/components/ui/card';
 
 const ProductsPage = () => {
-  // Get unique categories and their first product image
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProductsData();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
+
   const categories = Array.from(
-    new Set(productsData.map(product => product.category))
+    new Set(products.map(product => product.category))
   ).map(category => {
-    const categoryProducts = productsData.filter(p => p.category === category);
+    const categoryProducts = products.filter(p => p.category === category);
     const productCount = categoryProducts.length;
-    // Use the first product image as category image
-    const firstProductImage = Array.isArray(categoryProducts[0].image) 
-      ? categoryProducts[0].image[0] 
+    const firstProductImage = Array.isArray(categoryProducts[0].image)
+      ? categoryProducts[0].image[0]
       : categoryProducts[0].image;
-    
+
     return {
       name: category,
       productCount,
-      image: firstProductImage
+      image: firstProductImage,
     };
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen w-full">

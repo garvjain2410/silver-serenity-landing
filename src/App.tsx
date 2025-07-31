@@ -36,6 +36,36 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const BlogIndex = lazy(() => import("./pages/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const AdminPage = lazy(() => 
+  import("./pages/AdminPage")
+    .catch(error => {
+      console.error("Failed to load AdminPage:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
+const AdminLogin = lazy(() => 
+  import("./pages/AdminLogin")
+    .catch(error => {
+      console.error("Failed to load AdminLogin:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
+const ProductUpload = lazy(() => 
+  import("./pages/ProductUpload")
+    .catch(error => {
+      console.error("Failed to load ProductUpload:", error);
+      return { default: () => <div>Error loading page</div> };
+    })
+);
+
+const isAuthenticated = () => {
+  // Replace this with actual authentication logic
+  return !!localStorage.getItem("authToken");
+};
+
+const RestrictedRoute = ({ element }: { element: JSX.Element }) => {
+  return isAuthenticated() ? element : <div>Access Denied</div>;
+};
 
 // Make sure .env variables are available
 // Check if we have the WhatsApp number available
@@ -69,6 +99,9 @@ const App = () => (
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin" element={<RestrictedRoute element={<AdminPage />} />} />
+                <Route path="/admin/upload" element={<RestrictedRoute element={<ProductUpload />} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

@@ -27,6 +27,13 @@ exports.handler = async (event, context) => {
       description: doc.data().metadata.description, // Include description for debugging or future use
     }));
 
+    // Fetch product data from Firestore
+    const productsSnapshot = await db.collection('products').get();
+    const products = productsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      updatedAt: doc.data().metadata.lastUpdated, // Use `metadata.lastUpdated` for lastmod
+    }));
+
     // Generate dynamic blog URLs
     const blogUrls = blogs.map(blog => `
       <url>
@@ -34,6 +41,16 @@ exports.handler = async (event, context) => {
         <lastmod>${blog.updatedAt}</lastmod>
         <changefreq>never</changefreq>
         <priority>0.6</priority>
+      </url>
+    `).join('');
+
+    // Generate dynamic product URLs
+    const productUrls = products.map(product => `
+      <url>
+        <loc>https://omsilver.in/products/${product.id}</loc>
+        <lastmod>${product.updatedAt}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
       </url>
     `).join('');
 
@@ -105,24 +122,7 @@ exports.handler = async (event, context) => {
       </url>
 
       <!-- Individual Products -->
-      <url>
-        <loc>https://omsilver.in/products/1</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/2</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/3</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-      </url>
+      ${productUrls}
 
       <!-- Dynamic Blog Posts -->
       ${blogUrls}

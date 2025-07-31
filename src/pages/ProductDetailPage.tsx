@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
-import { productsData, Product } from '@/data/productsData';
+import { fetchProductsData, Product } from '@/data/productsData';
 import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -19,24 +18,30 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Find product by ID
-    const parsedId = parseInt(productId || '0');
-    const foundProduct = productsData.find(p => p.id === parsedId);
+    const loadProduct = async () => {
+      try {
+        const products = await fetchProductsData();
+        const foundProduct = products.find(p => p.id === parseInt(productId || '0'));
+        if (foundProduct) {
+          setProduct(foundProduct);
+          setRelatedProducts(
+            products.filter(p => p.category === foundProduct.category && p.id !== foundProduct.id).slice(0, 3)
+          );
+        } else {
+          toast.error("Product not found!");
+          navigate('/products', { replace: true });
+        }
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setActiveImageIndex(0);
-      // Get related products from the same category
-      const related = productsData
-        .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
-        .slice(0, 3);
-      setRelatedProducts(related);
-    } else {
-      toast.error("Product not found!");
-      navigate('/products', { replace: true });
-    }
+    loadProduct();
   }, [productId, navigate]);
 
   const handleAddToCart = () => {
@@ -62,6 +67,10 @@ const ProductDetailPage = () => {
   };
 
   const productImages = getProductImages();
+
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center">Loading...</div>;
+  }
 
   if (!product) {
     return <div className="h-screen flex items-center justify-center">Loading...</div>;

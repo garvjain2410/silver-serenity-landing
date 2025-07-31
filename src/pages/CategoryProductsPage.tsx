@@ -1,35 +1,46 @@
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import SectionTitle from "@/components/SectionTitle";
-import { productsData, Product } from '@/data/productsData';
 import { useCart } from '@/contexts/CartContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Plus, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
+import { fetchProductsData, Product } from '@/data/productsData';
 
 const CategoryProductsPage = () => {
   const { category } = useParams<{ category: string }>();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  
-  // Filter products by category
-  const filteredProducts = productsData.filter(
-    product => product.category.toLowerCase() === category?.toLowerCase()
-  );
-  
-  // Redirect if category doesn't exist
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!category || filteredProducts.length === 0) {
-      navigate('/products', { replace: true });
-      toast.error("Category not found!");
-    }
-  }, [category, filteredProducts.length, navigate]);
-  
+    const loadCategoryProducts = async () => {
+      try {
+        const products = await fetchProductsData();
+        const categoryProducts = products.filter(
+          product => product.category.toLowerCase() === category?.toLowerCase()
+        );
+        if (categoryProducts.length > 0) {
+          setFilteredProducts(categoryProducts);
+        } else {
+          toast.error("Category not found!");
+          navigate('/products', { replace: true });
+        }
+      } catch (error) {
+        console.error('Error fetching category products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCategoryProducts();
+  }, [category, navigate]);
+
   // Handle add to cart
   const handleAddToCart = (product: Product) => {
     addToCart(product);
@@ -51,6 +62,10 @@ const CategoryProductsPage = () => {
   const getPrimaryImage = (product: Product) => {
     return Array.isArray(product.image) ? product.image[0] : product.image;
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen w-full">
