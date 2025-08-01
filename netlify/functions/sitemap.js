@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
     // Fetch product data from Firestore
     const productsSnapshot = await db.collection('products').get();
     const products = productsSnapshot.docs.map(doc => ({
-      id: doc.id,
+      id: doc.data().id, // Use the `id` field from the document data
       updatedAt: doc.data().metadata?.lastUpdated || new Date().toISOString(), 
       category: doc.data().category, 
     }));
