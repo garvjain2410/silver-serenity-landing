@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import SectionTitle from "@/components/SectionTitle";
 import { Card, CardContent } from '@/components/ui/card';
+import { Helmet } from "react-helmet";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -48,6 +49,9 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen w-full">
+      <Helmet>
+        <title>Our Collections - Silver Serenity</title>
+      </Helmet>
       <Header />
       <main className="pt-24 pb-16 bg-gradient-to-b from-white to-silver-light">
         <Container>

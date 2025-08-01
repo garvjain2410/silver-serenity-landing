@@ -1,5 +1,5 @@
-
 import { lazy, Suspense, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
@@ -44,6 +44,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen w-full">
+      <Helmet>
+        <title>Welcome to Silver Serenity</title>
+      </Helmet>
       <Header />
       <main>
         <Hero />

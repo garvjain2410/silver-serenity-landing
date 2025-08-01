@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Plus, SendHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
+import { Helmet } from "react-helmet";
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -24,7 +25,9 @@ const ProductDetailPage = () => {
     const loadProduct = async () => {
       try {
         const products = await fetchProductsData();
-        const foundProduct = products.find(p => p.id === parseInt(productId || '0'));
+        const foundProduct = products.find(
+          p => p.id.toString() === productId
+        );
         if (foundProduct) {
           setProduct(foundProduct);
           setRelatedProducts(
@@ -78,6 +81,9 @@ const ProductDetailPage = () => {
 
   return (
     <div className="min-h-screen w-full">
+      <Helmet>
+        <title>{product ? `${product.name} - Silver Serenity` : "Loading..."}</title>
+      </Helmet>
       <Header />
       <main className="pt-24 pb-16">
         <Container>

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Plus, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 import { fetchProductsData, Product } from '@/data/productsData';
+import { Helmet } from "react-helmet";
 
 const CategoryProductsPage = () => {
   const { category } = useParams<{ category: string }>();
@@ -69,6 +70,9 @@ const CategoryProductsPage = () => {
 
   return (
     <div className="min-h-screen w-full">
+      <Helmet>
+        <title>{categoryDisplayName} Collection - Silver Serenity</title>
+      </Helmet>
       <Header />
       <main className="pt-24 pb-16 bg-gradient-to-b from-white to-silver-light/30">
         <Container>
