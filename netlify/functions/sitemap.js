@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
     const productsSnapshot = await db.collection('products').get();
     const products = productsSnapshot.docs.map(doc => ({
       id: doc.id,
-      updatedAt: doc.data().metadata.lastUpdated, // Use `metadata.lastUpdated` for lastmod
+      updatedAt: doc.data().metadata?.lastUpdated || new Date().toISOString(), // Add fallback for lastUpdated
     }));
 
     // Generate dynamic blog URLs
