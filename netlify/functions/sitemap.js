@@ -16,45 +16,67 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
+// Utility function to escape XML special characters
+function escapeXml(unsafe) {
+  return unsafe.replace(/[<>&'"]/g, function (char) {
+    switch (char) {
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '&': return '&amp;';
+      case '\'': return '&apos;';
+      case '"': return '&quot;';
+    }
+  });
+}
+
 exports.handler = async (event, context) => {
   try {
     // Fetch blog data from Firestore
     const blogsSnapshot = await db.collection('blogPosts').get();
     const blogs = blogsSnapshot.docs.map(doc => ({
       slug: doc.data().slug,
-      updatedAt: doc.data().metadata.datePublished, // Use `metadata.datePublished` for lastmod
-      title: doc.data().metadata.title, // Include title for debugging or future use
-      description: doc.data().metadata.description, // Include description for debugging or future use
+      updatedAt: doc.data().metadata.datePublished, 
+      title: doc.data().metadata.title, 
+      description: doc.data().metadata.description, 
     }));
 
     // Fetch product data from Firestore
     const productsSnapshot = await db.collection('products').get();
     const products = productsSnapshot.docs.map(doc => ({
       id: doc.id,
-      updatedAt: doc.data().metadata?.lastUpdated || new Date().toISOString(), // Add fallback for lastUpdated
+      updatedAt: doc.data().metadata?.lastUpdated || new Date().toISOString(), 
+      category: doc.data().category, 
     }));
 
-    // Generate dynamic blog URLs
+    const categories = [...new Set(products.map(product => product.category))];
+
+    const categoryUrls = categories.map(category => `
+      <url>
+        <loc>${escapeXml(`https://omsilver.in/products/category/${category}`)}</loc>
+        <lastmod>${escapeXml(new Date().toISOString())}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    `).join('');
+
     const blogUrls = blogs.map(blog => `
       <url>
-        <loc>https://omsilver.in/blog/${blog.slug}</loc>
-        <lastmod>${blog.updatedAt}</lastmod>
+        <loc>${escapeXml(`https://omsilver.in/blog/${blog.slug}`)}</loc>
+        <lastmod>${escapeXml(blog.updatedAt)}</lastmod>
         <changefreq>never</changefreq>
         <priority>0.6</priority>
       </url>
     `).join('');
 
-    // Generate dynamic product URLs
     const productUrls = products.map(product => `
       <url>
-        <loc>https://omsilver.in/products/${product.id}</loc>
-        <lastmod>${product.updatedAt}</lastmod>
+        <loc>${escapeXml(`https://omsilver.in/products/${product.id}`)}</loc>
+        <lastmod>${escapeXml(product.updatedAt)}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
       </url>
     `).join('');
 
-    // Construct the sitemap
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <!-- Main Pages -->
@@ -89,37 +111,8 @@ exports.handler = async (event, context) => {
         <priority>0.8</priority>
       </url>
       
-      <!-- Product Categories -->
-      <url>
-        <loc>https://omsilver.in/products/category/murti</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/category/payal</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/category/rings</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/category/bracelets</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
-      <url>
-        <loc>https://omsilver.in/products/category/chains</loc>
-        <lastmod>2025-05-18</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
+      <!-- Dynamic Product Categories -->
+      ${categoryUrls}
 
       <!-- Individual Products -->
       ${productUrls}
